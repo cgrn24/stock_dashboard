@@ -25,3 +25,19 @@ body {
     )
     rgb(var(--background-start-rgb));
 } */
+
+@layer components {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #a5cffc;
+    width: 5px;
+    border-radius: 10px;
+  }
+}
