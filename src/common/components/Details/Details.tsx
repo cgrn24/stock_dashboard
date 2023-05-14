@@ -27,7 +27,7 @@ export const Details: FC<Props> = ({ details }) => {
         {Object.keys(detailsList).map((item) => {
           return (
             <li key={item} className='flex-1 flex justify-between items-center'>
-              <span>{detailsList[item]}</span>
+              <span>{(detailsList as any)[item]}</span>
               <span className='font-bold'>{item === 'marketCapitalization' ? `${convertMillionToBillion(details[item])}B` : details[item]}</span>
             </li>
           )

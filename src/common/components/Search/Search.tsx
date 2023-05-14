@@ -1,3 +1,5 @@
+'use client'
+
 import { mockSearchResults } from '@/common/constants/mock'
 import { useState } from 'react'
 import { SearchIcon, XIcon } from '@heroicons/react/solid'
