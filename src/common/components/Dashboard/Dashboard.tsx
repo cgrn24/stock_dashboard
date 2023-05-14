@@ -1,6 +1,7 @@
 import { mockCompanyDetails } from '@/common/constants/mock'
 import { Card } from '../Card/Card'
 import { Header } from '../Header/Header'
+import { Overview } from '../Overview/Overview'
 
 export const Dashboard = () => {
   return (
@@ -12,7 +13,7 @@ export const Dashboard = () => {
         <Card>Chart</Card>
       </div>
       <div>
-        <Card>Overview</Card>
+        <Overview symbol={mockCompanyDetails.ticker} price={300} change={30} changePercent={10.0} currency={'USD'} />
       </div>
       <div className='row-span-2 xl:row-span-3'>
         <Card>Details</Card>
