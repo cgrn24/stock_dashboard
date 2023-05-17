@@ -1,21 +1,28 @@
 'use client'
 
-import { mockSearchResults } from '@/common/constants/mock'
 import { useState } from 'react'
 import { SearchIcon, XIcon } from '@heroicons/react/solid'
 import { SearchResults } from '../SearchResults/SearchResults'
+import { useQuery } from '@tanstack/react-query'
+import { stockApi } from '../../api/stock-api'
 
 export const Search = () => {
   const [input, setInput] = useState('')
-  const [bestMatches, setBestMatches] = useState(mockSearchResults.result)
+  const [bestMatches, setBestMatches] = useState<any>([])
 
   const clear = () => {
     setInput('')
     setBestMatches([])
   }
+
+  const { data } = useQuery(['searchSymbol', input], () => stockApi.searchSymbol(input))
+  console.log(input)
+  console.log(bestMatches)
+
   const updateBestMatches = () => {
-    setBestMatches(mockSearchResults.result)
+    setBestMatches(data?.data.result)
   }
+
   return (
     <div>
       <div className='flex items-center my-4 border-2 rounded-md relative z-50 w-96 bg-white border-neutral-200'>
