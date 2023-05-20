@@ -44,7 +44,7 @@ export const Chart = () => {
         const resolution = chartConfig[filter].resolution
         const result = await stockApi.fetchHistoricalData(stockSymbol, resolution, startTimestampUnix, endTimestampUnix)
         console.log(result)
-        setData(formatData(result.data.data))
+        setData(formatData(result.data))
       } catch (error) {
         setData([])
         console.log(error)
