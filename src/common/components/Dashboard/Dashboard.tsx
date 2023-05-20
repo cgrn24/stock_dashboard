@@ -30,7 +30,7 @@ export const Dashboard = () => {
     const updateStockDetails = async () => {
       try {
         const result = await stockApi.fetchStockDetails(stockSymbol)
-        setStockDetails(result)
+        setStockDetails(result.data)
       } catch (error) {
         setStockDetails({})
         console.log(error)
@@ -40,7 +40,7 @@ export const Dashboard = () => {
     const updateStockOverview = async () => {
       try {
         const result = await stockApi.fetchQuote(stockSymbol)
-        setQuote(result)
+        setQuote(result.data)
       } catch (error) {
         setQuote({})
         console.log(error)
