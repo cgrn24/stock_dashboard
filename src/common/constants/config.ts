@@ -4,3 +4,5 @@ export const chartConfig = {
   '1M': { resolution: '60', days: 0, weeks: 0, months: 1, years: 0 },
   '1Y': { resolution: 'D', days: 0, weeks: 0, months: 0, years: 1 },
 }
+
+export type DataType = '1D' | '1W' | '1M' | '1Y'

@@ -15,13 +15,25 @@ export const Search = () => {
     setBestMatches([])
   }
 
-  const { data } = useQuery(['searchSymbol', input], () => stockApi.searchSymbol(input))
+  // const { data } = useQuery(['searchSymbol', input], () => stockApi.searchSymbol(input))
+  const updateBestMatches = async () => {
+    try {
+      if (input) {
+        const searchResults = await stockApi.searchSymbol(input)
+        const result = searchResults.data.result
+        setBestMatches(result)
+      }
+    } catch (error) {
+      setBestMatches([])
+      console.log(error)
+    }
+  }
   console.log(input)
   console.log(bestMatches)
 
-  const updateBestMatches = () => {
-    setBestMatches(data?.data.result)
-  }
+  // const updateBestMatches = () => {
+  //   setBestMatches(data?.data.result)
+  // }
 
   return (
     <div>

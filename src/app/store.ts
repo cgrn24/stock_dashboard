@@ -1,11 +1,11 @@
 import { create } from 'zustand'
 
-type StoreType = {
+export type StoreType = {
   stockSymbol: string
   setStockSymbol: (symbol: string) => void
 }
 
-const useStore = create<StoreType>((set) => ({
+export const useStore = create<StoreType>()((set) => ({
   stockSymbol: 'FB',
-  setStockSymbol: (symbol) => set((state) => ({ stockSymbol: symbol })),
+  setStockSymbol: (symbol) => set({ stockSymbol: symbol }),
 }))
