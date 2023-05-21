@@ -14,7 +14,7 @@ export const SearchResults: FC<Props> = ({ results }) => {
           <li
             onClick={() => setStockSymbol(item.symbol)}
             key={item.symbol}
-            className='cursor-pointer p-4 m-2 flex items-center justify-between rounded-md hover:bg-indigo-200'
+            className='cursor-pointer p-4 m-2 flex items-center justify-between rounded-md hover:bg-indigo-200 transition duration-300'
           >
             <span>{item.symbol}</span>
             <span>{item.description}</span>
