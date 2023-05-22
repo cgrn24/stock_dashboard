@@ -17,39 +17,17 @@ export const Dashboard = () => {
 
   const [quote, setQuote] = useState<any>({})
 
-  // const fetchedDetails = useQuery(['details', stockSymbol], (stockSymbol) => stockApi.fetchStockDetails(stockSymbol))
+  const { data: fetchedDetails } = useQuery(['details', stockSymbol], () => stockApi.fetchStockDetails(stockSymbol), {
+    onSuccess(data) {
+      setStockDetails(data.data)
+    },
+  })
 
-  // const fetchedOverview = useQuery(['overview', stockSymbol], (stockSymbol) => stockApi.fetchQuote(stockSymbol))
-
-  // useEffect(() => {
-  //   setStockDetails(fetchedDetails)
-  //   setQuote(fetchedOverview)
-  // }, [fetchedDetails, fetchedOverview])
-
-  useEffect(() => {
-    const updateStockDetails = async () => {
-      try {
-        const result = await stockApi.fetchStockDetails(stockSymbol)
-        setStockDetails(result.data)
-      } catch (error) {
-        setStockDetails({})
-        console.log(error)
-      }
-    }
-
-    const updateStockOverview = async () => {
-      try {
-        const result = await stockApi.fetchQuote(stockSymbol)
-        setQuote(result.data)
-      } catch (error) {
-        setQuote({})
-        console.log(error)
-      }
-    }
-
-    updateStockDetails()
-    updateStockOverview()
-  }, [stockSymbol])
+  const { data: fetchedQuote } = useQuery(['overview', stockSymbol], () => stockApi.fetchQuote(stockSymbol), {
+    onSuccess(data) {
+      setQuote(data.data)
+    },
+  })
 
   return (
     <div className='h-screen grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 grid-rows-8 md:grid-rows-7 xl:grid-rows-5 auto-rows-fr gap-6 p-10 front-quicksand bg-neutral-100'>

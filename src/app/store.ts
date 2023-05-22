@@ -6,6 +6,6 @@ export type StoreType = {
 }
 
 export const useStore = create<StoreType>()((set) => ({
-  stockSymbol: 'FB',
+  stockSymbol: 'AAPL',
   setStockSymbol: (symbol) => set({ stockSymbol: symbol }),
 }))

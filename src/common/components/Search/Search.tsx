@@ -15,25 +15,12 @@ export const Search = () => {
     setBestMatches([])
   }
 
-  // const { data } = useQuery(['searchSymbol', input], () => stockApi.searchSymbol(input))
-  const updateBestMatches = async () => {
-    try {
-      if (input) {
-        const searchResults = await stockApi.searchSymbol(input)
-        const result = searchResults.data.result
-        setBestMatches(result)
-      }
-    } catch (error) {
-      setBestMatches([])
-      console.log(error)
-    }
-  }
-  console.log(input)
-  console.log(bestMatches)
-
-  // const updateBestMatches = () => {
-  //   setBestMatches(data?.data.result)
-  // }
+  const { data, refetch } = useQuery(['searchSymbol', input], () => stockApi.searchSymbol(input), {
+    onSuccess(data) {
+      setBestMatches(data.data.result)
+    },
+    enabled: false,
+  })
 
   return (
     <div>
@@ -46,7 +33,7 @@ export const Search = () => {
           onChange={(event) => setInput(event.target.value)}
           onKeyPress={(event) => {
             if (event.key === 'Enter') {
-              updateBestMatches()
+              refetch()
             }
           }}
         />
@@ -56,7 +43,7 @@ export const Search = () => {
           </button>
         )}
         <button
-          onClick={updateBestMatches}
+          onClick={() => refetch()}
           className='h-8 w-8 bg-indigo-600 rounded-md flex justify-center items-center m-1 p-2 transition duration-300 hover:ring-2 ring-indigo-400'
         >
           <SearchIcon className='h-4 w-4 fill-gray-100' />
