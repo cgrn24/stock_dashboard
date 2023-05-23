@@ -12,6 +12,7 @@ import { ChartFilter } from '../ChartFilter/ChartFilter'
 
 export const Chart = () => {
   const [filter, setFilter] = useState<DataType>('1W')
+  // const [unixData, setUnixData] = useState<any>([])
   const [data, setData] = useState<any>([])
   const stockSymbol = useStore((state) => state.stockSymbol)
 
@@ -24,35 +25,80 @@ export const Chart = () => {
     })
   }
 
-  // const chartData = useQuery(['chartData', stockSymbol], (stockSymbol, resolution, startTimestampUnix, endTimestampUnix) => stockApi.fetchHistoricalData(stockSymbol, resolution, startTimestampUnix, endTimestampUnix))
+  // const getData = (item: DataType) => {
+  //   setFilter(item)
+  //     const getNewData = () => {
+  //   const { days, weeks, months, years } = chartConfig[item]
+  //   const endDate = new Date()
+  //   const startDate = createDate(endDate, -days, -weeks, -months, -years)
+  //   const startTimestampUnix = convertDateToUnixTimestamp(startDate)
+  //   const endTimestampUnix = convertDateToUnixTimestamp(endDate)
+  //   return { startTimestampUnix, endTimestampUnix }
+  //     }
+  // const { startTimestampUnix, endTimestampUnix } = getNewData()
+  //   const chartData = useQuery(
+  //   ['chartData', stockSymbol],
+  //   () => stockApi.fetchHistoricalData(stockSymbol, chartConfig[filter].resolution, startTimestampUnix, endTimestampUnix),
+  //   {
+  //     enabled: !!filter,
+  //     onSuccess(data) {
+  //       setData(formatData(data.data))
+  //     },
+  //   }
+  // )
+  // }
+  // not working properly
+  const getNewData = () => {
+    const { days, weeks, months, years } = chartConfig[filter]
+    const endDate = new Date()
+    const startDate = createDate(endDate, -days, -weeks, -months, -years)
+    const startTimestampUnix = convertDateToUnixTimestamp(startDate)
+    const endTimestampUnix = convertDateToUnixTimestamp(endDate)
+    return { startTimestampUnix, endTimestampUnix }
+  }
 
-  useEffect(() => {
-    const getDateRange = () => {
-      const { days, weeks, months, years } = chartConfig[filter]
+  // const changeFilterHandler = (item: DataType) => {
+  //   setFilter(item)
+  //   const { startTimestampUnix, endTimestampUnix } = getNewData()
+  //   setUnixData([startTimestampUnix, endTimestampUnix])
+  // }
+  const { data: chartData } = useQuery(['chartData', filter], {
+    queryFn: async () => {
+      const { startTimestampUnix, endTimestampUnix } = getNewData()
+      const data = await stockApi.fetchHistoricalData(stockSymbol, chartConfig[filter].resolution, startTimestampUnix, endTimestampUnix)
+      return data
+    },
+    onSuccess(data) {
+      setData(formatData(data.data))
+    },
+  })
+  // useEffect(() => {
+  //   const getDateRange = () => {
+  //     const { days, weeks, months, years } = chartConfig[filter]
 
-      const endDate = new Date()
-      const startDate = createDate(endDate, -days, -weeks, -months, -years)
+  //     const endDate = new Date()
+  //     const startDate = createDate(endDate, -days, -weeks, -months, -years)
 
-      const startTimestampUnix = convertDateToUnixTimestamp(startDate)
-      const endTimestampUnix = convertDateToUnixTimestamp(endDate)
-      return { startTimestampUnix, endTimestampUnix }
-    }
+  //     const startTimestampUnix = convertDateToUnixTimestamp(startDate)
+  //     const endTimestampUnix = convertDateToUnixTimestamp(endDate)
+  //     return { startTimestampUnix, endTimestampUnix }
+  //   }
 
-    const updateChartData = async () => {
-      try {
-        const { startTimestampUnix, endTimestampUnix } = getDateRange()
-        const resolution = chartConfig[filter].resolution
-        const result = await stockApi.fetchHistoricalData(stockSymbol, resolution, startTimestampUnix, endTimestampUnix)
-        console.log(result)
-        setData(formatData(result.data))
-      } catch (error) {
-        setData([])
-        console.log(error)
-      }
-    }
+  //   const updateChartData = async () => {
+  //     try {
+  //       const { startTimestampUnix, endTimestampUnix } = getDateRange()
+  //       const resolution = chartConfig[filter].resolution
+  //       const result = await stockApi.fetchHistoricalData(stockSymbol, resolution, startTimestampUnix, endTimestampUnix)
+  //       console.log(result)
+  //       setData(formatData(result.data))
+  //     } catch (error) {
+  //       setData([])
+  //       console.log(error)
+  //     }
+  //   }
 
-    updateChartData()
-  }, [stockSymbol, filter])
+  //   updateChartData()
+  // }, [stockSymbol, filter])
 
   return (
     <Card>
