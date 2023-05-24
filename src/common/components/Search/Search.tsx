@@ -5,22 +5,20 @@ import { SearchIcon, XIcon } from '@heroicons/react/solid'
 import { SearchResults } from '../SearchResults/SearchResults'
 import { useQuery } from '@tanstack/react-query'
 import { stockApi } from '../../api/stock-api'
+import { queryClient } from '@/app/layout'
 
 export const Search = () => {
   const [input, setInput] = useState('')
-  const [bestMatches, setBestMatches] = useState<any>([])
 
   const clear = () => {
     setInput('')
-    setBestMatches([])
+    queryClient.removeQueries({ queryKey: ['searchSymbol'] })
   }
 
-  const { data, refetch } = useQuery(['searchSymbol', input], () => stockApi.searchSymbol(input), {
-    onSuccess(data) {
-      setBestMatches(data.data.result)
-    },
+  const { data: bestMatches, refetch } = useQuery(['searchSymbol', input], () => stockApi.searchSymbol(input), {
     enabled: false,
   })
+  console.log(bestMatches)
 
   return (
     <div>
@@ -48,7 +46,7 @@ export const Search = () => {
         >
           <SearchIcon className='h-4 w-4 fill-gray-100' />
         </button>
-        {input && bestMatches.length > 0 ? <SearchResults results={bestMatches} /> : null}
+        {input && bestMatches ? <SearchResults results={bestMatches.data.result} /> : null}
       </div>
     </div>
   )

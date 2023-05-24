@@ -2,7 +2,12 @@ import { useStore } from '@/app/store'
 import { FC } from 'react'
 
 type Props = {
-  results: any
+  results: Array<{
+    description: string
+    displaySymbol: string
+    symbol: string
+    type: string
+  }>
 }
 
 export const SearchResults: FC<Props> = ({ results }) => {
