@@ -1,7 +1,7 @@
 'use client'
 
 import { useStore } from '@/app/store'
-import { stockApi } from '@/common/api/stock-api'
+import { HistoricalDataType, stockApi } from '@/common/api/stock-api'
 import { chartConfig, DataType } from '@/common/constants/config'
 import { convertDateToUnixTimestamp, convertUnixTimestampToDate, createDate } from '@/common/utils/date-helpers'
 import { useQuery } from '@tanstack/react-query'
@@ -15,8 +15,8 @@ export const Chart = () => {
   const [data, setData] = useState<any>([])
   const stockSymbol = useStore((state) => state.stockSymbol)
 
-  const formatData = (data: any) => {
-    return data.c.map((item: any, index: any) => {
+  const formatData = (data: HistoricalDataType) => {
+    return data.c.map((item, index) => {
       return {
         value: item.toFixed(2),
         date: convertUnixTimestampToDate(data.t[index]),

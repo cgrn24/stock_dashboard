@@ -60,7 +60,7 @@ export type QuoteType = {
   t: number
 }
 
-type HistoricalDataType = {
+export type HistoricalDataType = {
   c: Array<number>
   h: Array<number>
   l: Array<number>

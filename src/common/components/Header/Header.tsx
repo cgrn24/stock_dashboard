@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { Search } from '../Search/Search'
 
 type Props = {
-  name?: string
+  name: string
 }
 
 export const Header: FC<Props> = ({ name }) => {
