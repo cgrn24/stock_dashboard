@@ -8,14 +8,14 @@ export const stockApi = {
   searchSymbol(query: string) {
     return instance.get<SearchSymbolResponseType>(`search?q=${query}&token=${process.env.API_KEY}`)
   },
-  fetchStockDetails(stockSymbol: any) {
-    return instance.get(`stock/profile2?symbol=${stockSymbol}&token=${process.env.API_KEY}`)
+  fetchStockDetails(stockSymbol: string) {
+    return instance.get<DetailsType>(`stock/profile2?symbol=${stockSymbol}&token=${process.env.API_KEY}`)
   },
-  fetchQuote(stockSymbol: any) {
-    return instance.get(`quote?symbol=${stockSymbol}&token=${process.env.API_KEY}`)
+  fetchQuote(stockSymbol: string) {
+    return instance.get<QuoteType>(`quote?symbol=${stockSymbol}&token=${process.env.API_KEY}`)
   },
-  fetchHistoricalData(stockSymbol: any, resolution: any, from: any, to: any) {
-    return instance.get(`stock/candle?symbol=${stockSymbol}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.API_KEY}`)
+  fetchHistoricalData(stockSymbol: string, resolution: string, from: number, to: number) {
+    return instance.get<HistoricalDataType>(`stock/candle?symbol=${stockSymbol}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.API_KEY}`)
   },
 }
 
@@ -34,9 +34,7 @@ type SymbolType = {
   type: string
 }
 
-export type DeatailsType = Partial<Details>
-
-type Details = {
+export type DetailsType = {
   country: string
   currency: string
   exchange: string
@@ -49,4 +47,25 @@ type Details = {
   weburl: string
   logo: string
   finnhubIndustry: string
+}
+
+export type QuoteType = {
+  c: number
+  d: number
+  dp: number
+  h: number
+  l: number
+  o: number
+  pc: number
+  t: number
+}
+
+type HistoricalDataType = {
+  c: Array<number>
+  h: Array<number>
+  l: Array<number>
+  o: Array<number>
+  s: string
+  t: Array<number>
+  v: Array<number>
 }

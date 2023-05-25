@@ -14,11 +14,9 @@ export const Search = () => {
     setInput('')
     queryClient.removeQueries({ queryKey: ['searchSymbol'] })
   }
-
   const { data: bestMatches, refetch } = useQuery(['searchSymbol', input], () => stockApi.searchSymbol(input), {
     enabled: false,
   })
-  console.log(bestMatches)
 
   return (
     <div>

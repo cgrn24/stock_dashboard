@@ -2,11 +2,11 @@ import { FC } from 'react'
 import { Card } from '../Card/Card'
 
 type Props = {
-  symbol: any
-  price: any
-  change: any
-  changePercent: any
-  currency: any
+  symbol: string
+  price: number
+  change: number
+  changePercent: number
+  currency: string
 }
 
 export const Overview: FC<Props> = ({ symbol, price, change, changePercent, currency }) => {

@@ -1,9 +1,10 @@
+import { DetailsType } from '@/common/api/stock-api'
 import React from 'react'
 import { FC } from 'react'
 import { Card } from '../Card/Card'
 
 type Props = {
-  details: any
+  details: DetailsType
 }
 
 export const Details: FC<Props> = ({ details }) => {
@@ -27,8 +28,10 @@ export const Details: FC<Props> = ({ details }) => {
         {Object.keys(detailsList).map((item) => {
           return (
             <li key={item} className='flex-1 flex justify-between items-center'>
-              <span>{(detailsList as any)[item]}</span>
-              <span className='font-bold'>{item === 'marketCapitalization' ? `${convertMillionToBillion(details[item])}B` : details[item]}</span>
+              <span>{detailsList[item as keyof typeof detailsList]}</span>
+              <span className='font-bold'>
+                {item === 'marketCapitalization' ? `${convertMillionToBillion(details[item])}B` : details[item as keyof typeof detailsList]}
+              </span>
             </li>
           )
         })}
